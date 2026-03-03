@@ -1,172 +1,187 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Checkout | Arhaan Tech</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       body {
-        font-family: Arial, sans-serif;
-        background: #f4f4f4;
         margin: 0;
-        padding: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #2b5876, #4e4376);
+        color: white;
         text-align: center;
       }
-
       header {
-        background: #2b5876;
-        color: white;
-        padding: 20px;
-        font-size: 24px;
+        padding: 22px;
+        font-size: 26px;
+        background: rgba(0, 0, 0, 0.55);
         font-weight: bold;
       }
-
       .container {
-        max-width: 800px;
-        margin: 30px auto;
-        background: white;
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        max-width: 760px;
+        margin: 28px auto;
+        background: rgba(255, 255, 255, 0.06);
+        padding: 22px;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
       }
-
-      h2 {
-        margin-bottom: 20px;
-      }
-
-      ul {
-        list-style: none;
-        padding: 0;
-      }
-
-      li {
-        padding: 10px 0;
-        border-bottom: 1px solid #ddd;
+      .cart-list {
         text-align: left;
+        margin: 0 auto;
+        max-width: 680px;
       }
-
+      .cart-item {
+        background: rgba(255, 255, 255, 0.08);
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+      }
       .total {
-        font-size: 22px;
+        font-size: 20px;
         font-weight: bold;
-        margin-top: 20px;
+        margin-top: 12px;
+        color: #ffd17a;
       }
-
       .checkout-form {
-        margin-top: 25px;
+        margin-top: 18px;
         text-align: left;
+        max-width: 680px;
+        margin-left: auto;
+        margin-right: auto;
       }
-
       .checkout-form input {
         width: 100%;
         padding: 10px;
-        margin: 10px 0;
+        margin: 8px 0;
         border-radius: 8px;
-        border: 1px solid #ccc;
+        border: none;
+        box-sizing: border-box;
       }
-
-      .pay-button {
-        padding: 12px 25px;
+      .btn {
+        width: 100%;
+        padding: 12px;
         border: none;
         border-radius: 25px;
         background: #ff9800;
-        color: white;
-        font-size: 18px;
+        color: black;
+        font-weight: bold;
         cursor: pointer;
-        margin-top: 15px;
-        width: 100%;
+        margin-top: 12px;
       }
-
-      .pay-button:hover {
+      .btn:hover {
         background: #e68900;
       }
-
-      button {
-        padding: 10px 20px;
-        border: none;
+      .back-btn {
+        margin-top: 10px;
+        display: block;
+        width: 100%;
+        padding: 10px;
         border-radius: 25px;
-        background: #ff9800;
-        color: white;
-        font-size: 15px;
-        cursor: pointer;
-      }
-
-      button.back-btn {
+        border: none;
         background: #333;
-        margin-top: 20px;
-        padding: 10px 20px;
+        color: white;
+        cursor: pointer;
       }
     </style>
   </head>
-
   <body>
-    <header>🛒 Checkout</header>
-
+    <header>🛒 Checkout — Arhaan Tech</header>
     <div class="container">
       <h2>Your Cart</h2>
-      <ul id="cart-items"></ul>
-      <p class="total" id="cart-total">Total: ₹0</p>
+      <div class="cart-list" id="cart-items"></div>
+      <div class="total" id="cart-total">Total: ₹0</div>
 
-      <h2>Customer Details</h2>
-      <form class="checkout-form" id="checkout-form">
-        <input type="text" id="name" placeholder="Full Name" required />
-        <input type="text" id="address" placeholder="Address" required />
-        <input type="tel" id="phone" placeholder="Phone Number" required />
-      </form>
+      <h2 style="margin-top: 18px">Customer Details</h2>
+      <div class="checkout-form">
+        <input id="name" type="text" placeholder="Full name" required />
+        <input
+          id="address"
+          type="text"
+          placeholder="Delivery address"
+          required
+        />
+        <input id="phone" type="tel" placeholder="Phone number" required />
+      </div>
 
-      <!-- Paytm Button -->
-      <button class="pay-button" id="paytm-button">Pay with Paytm</button>
-
-      <button class="back-btn" onclick="window.location.href='index.html'">
+      <button class="btn" id="place-order-btn">Place Order & Pay</button>
+      <button class="back-btn" onclick="window.location.href='home.html'">
         ⬅ Back to Home
       </button>
     </div>
 
     <script src="cart.js"></script>
+    <script src="webhook.js"></script>
     <script>
-      // Render cart on checkout page
-      function renderCheckoutCart() {
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const cartItems = document.getElementById("cart-items");
-        const cartTotal = document.getElementById("cart-total");
-
-        cartItems.innerHTML = "";
-        let total = 0;
-
-        cart.forEach((item) => {
-          const li = document.createElement("li");
-          li.textContent = `${item.name} - ₹${item.price}`;
-          cartItems.appendChild(li);
-          total += item.price;
-        });
-
-        cartTotal.textContent = `Total: ₹${total}`;
+      function getLocalCart() {
+        return JSON.parse(localStorage.getItem("cart")) || [];
       }
-
+      function renderCheckoutCart() {
+        const cart = typeof getCart === "function" ? getCart() : getLocalCart();
+        const container = document.getElementById("cart-items");
+        const totalEl = document.getElementById("cart-total");
+        container.innerHTML = "";
+        let total = 0;
+        if (!cart || cart.length === 0) {
+          container.innerHTML = "<p>Your cart is empty.</p>";
+          totalEl.innerText = "Total: ₹0";
+          return { cart: [], total: 0 };
+        }
+        cart.forEach((item) => {
+          const div = document.createElement("div");
+          div.className = "cart-item";
+          div.innerHTML = `<div>${item.name}</div><div>₹${item.price}</div>`;
+          container.appendChild(div);
+          total += Number(item.price) || 0;
+        });
+        totalEl.innerText = "Total: ₹" + total;
+        return { cart, total };
+      }
       window.addEventListener("load", () => {
         renderCheckoutCart();
       });
-
-      // Paytm Button (example using Paytm Payment Link)
-      document.getElementById("paytm-button").addEventListener("click", () => {
-        const name = document.getElementById("name").value;
-        const address = document.getElementById("address").value;
-        const phone = document.getElementById("phone").value;
-
-        if (!name || !address || !phone) {
-          alert("Please fill all customer details!");
-          return;
-        }
-
-        // Example Paytm link (replace with your real link)
-        const paytmLink = "https://paytm.me/YourPaymentLinkHere";
-
-        // Open Paytm payment page
-        window.open(paytmLink, "_blank");
-
-        // Clear cart after payment
-        localStorage.removeItem("cart");
-        alert("Thank you for your order! Your cart has been cleared.");
-        window.location.href = "home.html";
-      });
+      document
+        .getElementById("place-order-btn")
+        .addEventListener("click", async () => {
+          const name = document.getElementById("name").value.trim();
+          const address = document.getElementById("address").value.trim();
+          const phone = document.getElementById("phone").value.trim();
+          if (!name || !address || !phone) {
+            alert(
+              "Please fill name, address and phone before placing the order."
+            );
+            return;
+          }
+          const { cart, total } = renderCheckoutCart();
+          if (!cart || cart.length === 0) {
+            alert("Your cart is empty.");
+            return;
+          }
+          const orderData = {
+            name,
+            address,
+            phone,
+            items: cart.map((i) => i.name).join(", "),
+            total,
+          };
+          try {
+            await sendOrderToWebhook(orderData);
+            localStorage.removeItem("cart");
+            if (typeof updateCartCount === "function") updateCartCount();
+            if (typeof renderCartSidebar === "function") renderCartSidebar();
+            alert(
+              "Thank you! Your order was sent. You will be redirected to home."
+            );
+            window.location.href = "home.html";
+          } catch (err) {
+            console.error(err);
+            alert("There was a problem sending the order. Try again.");
+          }
+        });
     </script>
   </body>
 </html>
