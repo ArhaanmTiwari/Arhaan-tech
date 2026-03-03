@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simon Says Memory Game | Arhaan Tech</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #42275a, #734b6d);
+        color: white;
+        text-align: center;
+      }
+
+      header {
+        padding: 25px;
+        font-size: 28px;
+        font-weight: bold;
+        background: rgba(0, 0, 0, 0.6);
+      }
+
+      .container {
+        padding: 40px 20px;
+      }
+
+      .card {
+        background: white;
+        color: black;
+        margin: 20px auto;
+        padding: 25px;
+        width: 85%;
+        max-width: 700px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      }
+
+      .price {
+        font-size: 22px;
+        font-weight: bold;
+        color: green;
+      }
+
+      ul {
+        text-align: left;
+        max-width: 500px;
+        margin: auto;
+      }
+
+      .btn {
+        padding: 14px 28px;
+        border: none;
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s ease;
+        margin: 10px;
+      }
+
+      /* Buy Now Button (Green) */
+      .buy-btn {
+        background: linear-gradient(45deg, #00c853, #009624);
+        color: white;
+        box-shadow: 0 5px 15px rgba(0, 200, 83, 0.4);
+      }
+
+      .buy-btn:hover {
+        transform: scale(1.05);
+        background: linear-gradient(45deg, #00e676, #00c853);
+      }
+
+      /* Add to Cart Button (Orange) */
+      .cart-btn {
+        background: linear-gradient(45deg, #ff9800, #f57c00);
+        color: white;
+        box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+      }
+
+      .cart-btn:hover {
+        transform: scale(1.05);
+        background: linear-gradient(45deg, #ffb74d, #ff9800);
+      }
+
+      /* Back Button */
+      .back-btn {
+        background: #333;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 25px;
+        font-size: 15px;
+        cursor: pointer;
+        margin-top: 30px;
+        transition: 0.3s ease;
+      }
+
+      .back-btn:hover {
+        background: #111;
+        transform: scale(1.05);
+      }
+
+      footer {
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.7);
+        margin-top: 40px;
+      }
+      /* Toggle Cart Button */
+      .cart-toggle {
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        background: linear-gradient(45deg, #ff9800, #f57c00);
+        border: none;
+        border-radius: 25px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 1000;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        transition: 0.3s ease;
+      }
+      .cart-toggle:hover {
+        transform: scale(1.05);
+      }
+
+      /* Cart Count Bubble */
+      .cart-count {
+        background: red;
+        border-radius: 50%;
+        padding: 4px 8px;
+        font-size: 12px;
+        margin-left: 5px;
+      }
+
+      /* Sidebar */
+      .cart-sidebar {
+        position: fixed;
+        top: 0;
+        right: -400px;
+        width: 350px;
+        height: 100%;
+        background: linear-gradient(180deg, #1e1e2f, #2c2c3c);
+        color: white;
+        padding: 25px;
+        box-shadow: -8px 0 25px rgba(0, 0, 0, 0.5);
+        transition: 0.4s ease;
+        overflow-y: auto;
+        z-index: 999;
+        font-family: Arial, sans-serif;
+      }
+
+      /* Sidebar active */
+      .cart-sidebar.active {
+        right: 0;
+      }
+
+      /* Cart items */
+      .cart-item {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 12px;
+        border-radius: 10px;
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: 0.3s;
+      }
+      .cart-item:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Remove button */
+      .remove-btn {
+        background: #e53935;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 8px;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+      .remove-btn:hover {
+        background: #d32f2f;
+      }
+
+      /* Close Button */
+      .close-btn {
+        width: 100%;
+        padding: 10px 0;
+        border: none;
+        border-radius: 20px;
+        background: #333;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 15px;
+        transition: 0.3s;
+      }
+      .close-btn:hover {
+        background: #111;
+      }
+      .cart-cart-button {
+        position: fixed;
+      }
+      /* Cart Sidebar Buttons */
+      #cart-sidebar .checkout-btn {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 25px;
+        background: #ff9800;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 15px;
+      }
+
+      #cart-sidebar .checkout-btn:hover {
+        background: #e68900;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>🎮 Simon Says Memory Game</header>
+
+    <div class="container">
+      <div class="card">
+        <h2>Product Overview</h2>
+        <p>
+          Repeat LED patterns correctly and challenge your memory skills with
+          increasing difficulty levels.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Features</h2>
+        <ul>
+          <li>✔ LED Pattern Memory Game</li>
+          <li>✔ Increasing Difficulty</li>
+          <li>✔ Fun Brain Training</li>
+          <li>✔ Arduino Powered</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Price</h2>
+        <p class="price">₹999</p>
+        <button class="btn buy-btn">🛒 Buy Now</button>
+        <button
+          onclick="addToCart('Simon Says Game', 999)"
+          class="btn cart-btn cart-toggle"
+        >
+          ➕ Add to Cart
+        </button>
+      </div>
+
+      <button class="back-btn" onclick="window.location.href='home.html'">
+        ⬅ Back to Home
+      </button>
+    </div>
+
+    <footer>
+      📞 Contact: +91-8823889628 <br />
+      © 2026 Arhaan Tech Innovations
+    </footer>
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="cart-sidebar">
+      <h2>Your Cart</h2>
+      <div id="cart-items"></div>
+      <h3 id="total"></h3>
+      <button onclick="toggleCart()" class="close-btn">Close</button>
+      <button
+        onclick="window.location.href='checkout.html'"
+        class="checkout-btn"
+      >
+        Checkout
+      </button>
+    </div>
+
+    <!-- Cart Toggle Button -->
+    <button onclick="toggleCart()" class="cart-toggle cart-cart-button">
+      🛒 Cart <span id="cart-count" class="cart-count">0</span>
+    </button>
+    <script src="cart.js"></script>
+  </body>
+</html>
