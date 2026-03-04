@@ -117,71 +117,35 @@
     <script src="cart.js"></script>
     <script src="webhook.js"></script>
     <script>
-      function getLocalCart() {
-        return JSON.parse(localStorage.getItem("cart")) || [];
-      }
-      function renderCheckoutCart() {
-        const cart = typeof getCart === "function" ? getCart() : getLocalCart();
-        const container = document.getElementById("cart-items");
-        const totalEl = document.getElementById("cart-total");
-        container.innerHTML = "";
-        let total = 0;
-        if (!cart || cart.length === 0) {
-          container.innerHTML = "<p>Your cart is empty.</p>";
-          totalEl.innerText = "Total: ₹0";
-          return { cart: [], total: 0 };
+      async function placeOrder() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        const orderData = {
+          name: document.getElementById("name").value,
+          phone: document.getElementById("phone").value,
+          address: document.getElementById("address").value,
+          items: cart.map((item) => item.name).join(", "),
+          total: cart.reduce((sum, item) => sum + item.price, 0),
+        };
+
+        const response = await fetch("YOUR_APPS_SCRIPT_URL_HERE", {
+          method: "POST",
+          body: JSON.stringify(orderData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          alert("Order placed successfully!");
+          localStorage.removeItem("cart");
+          window.location.href = "index.html";
+        } else {
+          alert("Error placing order");
         }
-        cart.forEach((item) => {
-          const div = document.createElement("div");
-          div.className = "cart-item";
-          div.innerHTML = `<div>${item.name}</div><div>₹${item.price}</div>`;
-          container.appendChild(div);
-          total += Number(item.price) || 0;
-        });
-        totalEl.innerText = "Total: ₹" + total;
-        return { cart, total };
       }
-      window.addEventListener("load", () => {
-        renderCheckoutCart();
-      });
-      document
-        .getElementById("place-order-btn")
-        .addEventListener("click", async () => {
-          const name = document.getElementById("name").value.trim();
-          const address = document.getElementById("address").value.trim();
-          const phone = document.getElementById("phone").value.trim();
-          if (!name || !address || !phone) {
-            alert(
-              "Please fill name, address and phone before placing the order."
-            );
-            return;
-          }
-          const { cart, total } = renderCheckoutCart();
-          if (!cart || cart.length === 0) {
-            alert("Your cart is empty.");
-            return;
-          }
-          const orderData = {
-            name,
-            address,
-            phone,
-            items: cart.map((i) => i.name).join(", "),
-            total,
-          };
-          try {
-            await sendOrderToWebhook(orderData);
-            localStorage.removeItem("cart");
-            if (typeof updateCartCount === "function") updateCartCount();
-            if (typeof renderCartSidebar === "function") renderCartSidebar();
-            alert(
-              "Thank you! Your order was sent. You will be redirected to home."
-            );
-            window.location.href = "home.html";
-          } catch (err) {
-            console.error(err);
-            alert("There was a problem sending the order. Try again.");
-          }
-        });
     </script>
   </body>
 </html>
