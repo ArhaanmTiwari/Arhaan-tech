@@ -1,25 +1,43 @@
-// ---------- webhook.js ----------
-// Sends order data to Google Apps Script Web App
+console.log("Webhook JS Loaded");
 
-const webhookURL =
-  "https://script.google.com/macros/s/AKfycbwefJXZo1L04VAKpf33ucuJ1V5yWg2omi-BLCXniQKIKEk0S0l0MJ0R-zrOzCAMxmyOeQ/exec";
+async function placeOrder() {
+  console.log("Place order clicked");
 
-function sendOrderToWebhook(orderData) {
-  return fetch(webhookURL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(orderData),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.status !== "success")
-        throw new Error(data.message || "Webhook failed");
-      alert("✅ Order placed successfully!");
-      return data;
-    })
-    .catch((err) => {
-      console.error("Webhook error:", err);
-      alert("❌ There was a problem placing your order. Check console.");
-      throw err;
-    });
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  if (cart.length === 0) {
+    alert("Cart is empty!");
+    return;
+  }
+
+  const orderData = {
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    address: document.getElementById("address").value,
+    items: cart.map((item) => item.name).join(", "),
+    total: cart.reduce((sum, item) => sum + item.price, 0),
+  };
+
+  console.log("Sending:", orderData);
+
+  try {
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbzRTTwH-J7tjxKd2MoQOhWVgtt4zoC2mcxnJ-K_EWJJKZyWySlT67K2IpjDqPoEF3bDsw/exec",
+      {
+        method: "POST",
+        body: JSON.stringify(orderData),
+      }
+    );
+
+    const result = await response.text();
+    console.log("Server response:", result);
+
+    alert("Order placed successfully!");
+
+    localStorage.removeItem("cart");
+    window.location.href = "index.html";
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Error placing order");
+  }
 }

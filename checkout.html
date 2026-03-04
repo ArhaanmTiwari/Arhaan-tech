@@ -108,7 +108,14 @@
         <input id="phone" type="tel" placeholder="Phone number" required />
       </div>
 
-      <button class="btn" id="place-order-btn">Place Order & Pay</button>
+      <button
+        type="button"
+        onclick="placeOrder()"
+        class="btn"
+        id="place-order-btn"
+      >
+        Place Order & Pay
+      </button>
       <button class="back-btn" onclick="window.location.href='home.html'">
         ⬅ Back to Home
       </button>
@@ -116,34 +123,3 @@
 
     <script src="cart.js"></script>
     <script src="webhook.js"></script>
-    <script>
-      async function placeOrder() {
-        const orderData = {
-          name: "Test Name",
-          phone: "1234567890",
-          address: "Test Address",
-          items: "Test Item",
-          total: 100,
-        };
-
-        console.log("Sending data:", orderData);
-
-        const response = await fetch(
-          "https://script.google.com/macros/s/AKfycbwefJXZo1L04VAKpf33ucuJ1V5yWg2omi-BLCXniQKIKEk0S0l0MJ0R-zrOzCAMxmyOeQ/exec",
-          {
-            method: "POST",
-            body: JSON.stringify(orderData),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        const text = await response.text();
-        console.log("Server response:", text);
-
-        alert("Check console");
-      }
-    </script>
-  </body>
-</html>
