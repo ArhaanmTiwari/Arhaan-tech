@@ -23,7 +23,7 @@ async function placeOrder() {
   });
 
   const url =
-    "https://script.google.com/macros/s/AKfycbzOjuZSt9eLpRBW1AHJu-wpkYGGmOrmv8RRw-CC9ddBJjQ-l1nSHSARzGjvJOKwPHKJGw/exec?" +
+    "https://script.google.com/macros/s/AKfycbxnTIQDI3Wl3lFlBuCmMBqOmQ4x1yizuCC1QxFt-fJu1DEfYKHfS_pswSCLS9GycDInuQ/exec?" +
     params.toString();
 
   // 🔥 IMPORTANT: fetch only, no redirect
