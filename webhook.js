@@ -8,6 +8,7 @@ async function placeOrder() {
     return;
   }
 
+  const order = "ORD" + Date.now();
   const name = document.getElementById("name").value;
   const phone = document.getElementById("phone").value;
   const address = document.getElementById("address").value;
@@ -15,6 +16,7 @@ async function placeOrder() {
   const total = cart.reduce((sum, item) => sum + item.price, 0);
 
   const params = new URLSearchParams({
+    order,
     name,
     phone,
     address,
@@ -23,14 +25,13 @@ async function placeOrder() {
   });
 
   const url =
-    "https://script.google.com/macros/s/AKfycbzxWbSvBADq-N30rcPvFF7etVI0JH-_NMjGOhYf2oWnWJn2OtOnziOSanEvVm9YN4EFew/exec?" +
+    "https://script.google.com/macros/s/AKfycbyK1HuSkxEsUDj2mEqE_X98e_s9mmHivcILEm3g5UTrUOAtcNFK7EZEoiBb3hPcQ_MGuQ/exec?" +
     params.toString();
 
   // 🔥 IMPORTANT: fetch only, no redirect
   await fetch(url);
 
-  alert("Order placed successfully!");
-
   localStorage.removeItem("cart");
-  window.location.href = "index.html";
+
+  window.location.href = "success.html?order=" + order;
 }

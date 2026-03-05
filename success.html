@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Order Successful</title>
+
+    <style>
+      body {
+        font-family: Arial;
+        background: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .box {
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: green;
+      }
+
+      button {
+        margin-top: 20px;
+        padding: 12px 25px;
+        border: none;
+        background: #007bff;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background: #0056b3;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box">
+      <h1>✅ Order Placed Successfully</h1>
+
+      <p>Thank you for shopping with us!</p>
+
+      <p>Your order has been received.</p>
+
+      <p>We will contact you soon.</p>
+
+      <p>
+        Orders are processed within <b>1–2 days</b>.<br />
+        Delivery usually takes <b>3–7 days</b> depending on your location.
+      </p>
+
+      <p>We will contact you soon with order updates.</p>
+
+      <h3>Refund / Return Policy</h3>
+
+      <p>
+        If your product arrives damaged or defective, please contact us within
+        <b>3 days</b> of delivery.
+      </p>
+
+      <p>We will arrange a replacement or refund after verifying the issue.</p>
+
+      <p><b>Order Number:</b> <span id="orderNumber"></span></p>
+
+      <button onclick="window.location.href='index.html'">Back to Home</button>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const orderNumber = params.get("order");
+
+      if (orderNumber) {
+        document.getElementById("orderNumber").innerText = orderNumber;
+      }
+    </script>
+  </body>
+</html>
