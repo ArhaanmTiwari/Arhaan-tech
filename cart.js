@@ -1,3 +1,4 @@
+window.onload = updateCartBubble()
 // Add item to cart
 function addToCart(productName, price) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -48,9 +49,16 @@ function removeItem(index) {
 
 function toggleCart() {
   document.getElementById("cart-sidebar").classList.toggle("active");
+  updateCartBubble();
   loadCart();
 }
 
-function updateCount() {
-  document.getElementById("cart-count").innerText = cart.length;
+function updateCartBubble() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let count = cart.length;
+
+  const bubble = document.getElementById("cart-count");
+  if (bubble) {
+    bubble.textContent = count;
+  }
 }
