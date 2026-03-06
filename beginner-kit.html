@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Arhaan Tech Innovations</title>
+    <title>Motion Detection Alarm | Arhaan Tech</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <style>
       body {
         margin: 0;
         font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #141e30, #243b55);
+        background: linear-gradient(135deg, #000000, #434343);
         color: white;
         text-align: center;
       }
 
       header {
-        padding: 30px;
-        font-size: 30px;
+        padding: 25px;
+        font-size: 28px;
         font-weight: bold;
         background: rgba(0, 0, 0, 0.6);
       }
 
-      .section-title {
-        margin-top: 40px;
-        font-size: 24px;
+      .container {
+        padding: 40px 20px;
       }
 
       .card {
@@ -30,29 +30,74 @@
         margin: 20px auto;
         padding: 25px;
         width: 85%;
-        max-width: 650px;
+        max-width: 700px;
         border-radius: 15px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
       }
 
       .price {
+        font-size: 22px;
         font-weight: bold;
         color: green;
-        font-size: 18px;
       }
 
-      button {
-        padding: 10px 20px;
+      ul {
+        text-align: left;
+        max-width: 500px;
+        margin: auto;
+      }
+
+      .btn {
+        padding: 14px 28px;
+        border: none;
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s ease;
+        margin: 10px;
+      }
+
+      /* Buy Now Button (Green) */
+      .buy-btn {
+        background: linear-gradient(45deg, #00c853, #009624);
+        color: white;
+        box-shadow: 0 5px 15px rgba(0, 200, 83, 0.4);
+      }
+
+      .buy-btn:hover {
+        transform: scale(1.05);
+        background: linear-gradient(45deg, #00e676, #00c853);
+      }
+
+      /* Add to Cart Button (Orange) */
+      .cart-btn {
+        background: linear-gradient(45deg, #ff9800, #f57c00);
+        color: white;
+        box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+      }
+
+      .cart-btn:hover {
+        transform: scale(1.05);
+        background: linear-gradient(45deg, #ffb74d, #ff9800);
+      }
+
+      /* Back Button */
+      .back-btn {
+        background: #333;
+        color: white;
+        padding: 12px 25px;
         border: none;
         border-radius: 25px;
-        background: #ff9800;
-        color: white;
         font-size: 15px;
         cursor: pointer;
+        margin-top: 30px;
+        transition: 0.3s ease;
       }
 
-      button:hover {
-        background: #e68900;
+      .back-btn:hover {
+        background: #111;
+        transform: scale(1.05);
       }
 
       footer {
@@ -179,91 +224,61 @@
   </head>
 
   <body>
-    <header>🚀 Arhaan Tech Innovations 🤖</header>
+    <header>The ArhaanTech Arduino Kit</header>
 
-    <h2 class="section-title">🔐 Security Products</h2>
+    <div class="container">
+      <div class="card">
+        <h2>Product Overview</h2>
+        <p>
+          The ArhaanTech Arduino Starter Kit is a beginner-friendly electronics
+          kit designed to help students learn programming, circuits, and
+          interactive electronics using the Arduino Uno microcontroller. The kit
+          contains essential components such as LEDs, sensors, displays, and
+          control modules that allow users to build multiple beginner projects.
+          It helps users understand the basics of coding, electronics, and
+          hardware interaction through hands-on experimentation.
+        </p>
+      </div>
 
-    <div class="card">
-      <h3>Smart Keypad Lock</h3>
-      <p>Password protected lock with LCD display and servo mechanism.</p>
-      <p class="price">₹1199</p>
-      <button onclick="window.location.href='security_lock.html'">
-        Order Now
-      </button>
-    </div>
+      <div class="card">
+        <h2>Components</h2>
+        <ul>
+          <li>✔ Arduino Uno</li>
+          <li>✔ USB Cable</li>
+          <li>✔ Breadboard</li>
+          <li>✔ Jumper Wires</li>
+          <li>✔ LEDs</li>
+          <li>✔ RGB LED</li>
+          <li>✔ Resistors</li>
+          <li>✔ Push Buttons</li>
+          <li>✔ LDR (Light Dependent Resistor)</li>
+          <li>✔ Buzzer</li>
+          <li>✔ LCD Display</li>
+          <li>✔ Potentiometer</li>
+          <li>✔ Joystick Module</li>
+          <li>✔ 1-Digit 7-Segment Display</li>
+        </ul>
+      </div>
 
-    <div class="card">
-      <h3>Touch Sensor Alarm</h3>
-      <p>Triggers alarm when touched. Perfect for drawers and boxes.</p>
-      <p class="price">₹899</p>
-      <button onclick="window.location.href='touch_alarm.html'">
-        Order Now
-      </button>
-    </div>
+      <div class="card">
+        <h2>Price</h2>
+        <p class="price">₹1999</p>
+        <button class="btn buy-btn">🛒 Buy Now</button>
+        <button
+          onclick="addToCart('The ArhaanTech Arduino Kit', 1999)"
+          class="btn cart-btn cart-toggle"
+        >
+          ➕ Add to Cart
+        </button>
+      </div>
 
-    <div class="card">
-      <h3>Motion Detection Alarm</h3>
-      <p>Detects movement and activates buzzer alert system.</p>
-      <p class="price">₹999</p>
-      <button onclick="window.location.href='motion-alarm.html'">
-        Order Now
-      </button>
-    </div>
-
-    <div class="card">
-      <h3>Smart Door Security System</h3>
-      <p>Advanced ultrasonic detection + keypad control.</p>
-      <p class="price">₹1799</p>
-      <button onclick="window.location.href='smart-door.html'">
-        Order Now
-      </button>
-    </div>
-
-    <h2 class="section-title">🚗 Utility Products</h2>
-
-    <div class="card">
-      <h3>Smart Parking Sensor</h3>
-      <p>Ultrasonic distance detection with LCD display and buzzer alert.</p>
-      <p class="price">₹1299</p>
-      <button onclick="window.location.href='parking-sensor.html'">
-        Order Now
-      </button>
-    </div>
-
-    <h2 class="section-title">🎮 Fun & Gaming Products</h2>
-
-    <div class="card">
-      <h3>Reaction Time Game</h3>
-      <p>Test your speed! Press button when LED lights up.</p>
-      <p class="price">₹799</p>
-      <button onclick="window.location.href='reaction-game.html'">
-        Order Now
-      </button>
-    </div>
-
-    <div class="card">
-      <h3>Simon Says Memory Game</h3>
-      <p>Repeat LED patterns to win. Fun brain training game.</p>
-      <p class="price">₹999</p>
-      <button onclick="window.location.href='simon-game.html'">
-        Order Now
-      </button>
-    </div>
-
-    <h2 class="section-title">Arduino Kits</h2>
-
-    <div class="card">
-      <h3>ArhaanTech Arduino Kit</h3>
-      <p>The Arduino Kit for you to build</p>
-      <p class="price">₹1999</p>
-      <button onclick="window.location.href='beginner-kit.html'">
-        Order Now
+      <button class="back-btn" onclick="window.location.href='index.html'">
+        ⬅ Back to Home
       </button>
     </div>
 
     <footer>
       📞 Contact: +91-8823889628 <br />
-      📍 Location: B-603 Shekhar Paradise, Nipania, Indore <br />
       © 2026 Arhaan Tech Innovations
     </footer>
     <!-- Cart Sidebar -->
@@ -284,6 +299,7 @@
     <button onclick="toggleCart()" class="cart-toggle cart-cart-button">
       🛒 Cart <span id="cart-count" class="cart-count">0</span>
     </button>
+
     <script src="cart.js"></script>
   </body>
 </html>
