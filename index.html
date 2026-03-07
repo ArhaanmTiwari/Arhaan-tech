@@ -175,6 +175,46 @@
       #cart-sidebar .checkout-btn:hover {
         background: #e68900;
       }
+
+      #custom-project {
+        padding: 70px 20px;
+        text-align: center;
+        background: linear-gradient(45deg,rgb(0, 0, 0),rgb(255, 255, 255))
+      }
+
+      .idea-form {
+        max-width: 500px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .idea-form input,
+      .idea-form textarea {
+        padding: 14px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+      }
+
+      .idea-form textarea {
+        min-height: 120px;
+      }
+
+      .idea-form button {
+        padding: 14px;
+        border: none;
+        border-radius: 8px;
+        background: #4f46e5;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .idea-form button:hover {
+        background: #3730a3;
+      }
     </style>
   </head>
 
@@ -261,6 +301,25 @@
       </button>
     </div>
 
+    <section id="custom-project">
+      <h2>Request a Custom Project</h2>
+      <p>Have an idea for an Arduino project or kit? Send it to us!</p>
+
+      <form id="ideaForm" class="idea-form">
+        <input type="text" name="name" placeholder="Your Name" required />
+
+        <input type="email" name="email" placeholder="Your Email" required />
+
+        <textarea
+          name="idea"
+          placeholder="Describe your idea..."
+          required
+        ></textarea>
+
+        <button type="submit">Send Idea 🚀</button>
+      </form>
+    </section>
+
     <footer>
       📞 Contact: +91-8823889628 <br />
       📍 Location: B-603 Shekhar Paradise, Nipania, Indore <br />
@@ -285,5 +344,6 @@
       🛒 Cart <span id="cart-count" class="cart-count">0</span>
     </button>
     <script src="cart.js"></script>
+    <script src="custom-idea.js"></script>
   </body>
 </html>
