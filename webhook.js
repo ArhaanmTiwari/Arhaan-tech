@@ -25,7 +25,7 @@ async function placeOrder() {
   });
 
   const url =
-    "https://script.google.com/macros/s/AKfycbyK1HuSkxEsUDj2mEqE_X98e_s9mmHivcILEm3g5UTrUOAtcNFK7EZEoiBb3hPcQ_MGuQ/exec?" +
+    "https://script.google.com/macros/s/AKfycbxAVU4nH1NR7iTvHDh9xrl-ecZ3vXF-54hsYRSDcye-U_vXQSrShaokK18-JhsAHVW7zw/exec?" +
     params.toString();
 
   // 🔥 IMPORTANT: fetch only, no redirect
