@@ -8,30 +8,53 @@ async function placeOrder() {
     return;
   }
 
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+
+  if (!name || !phone || !address) {
+    alert("Please fill all details!");
+    return;
+  }
+
   const order = "ORD" + Date.now();
-  const name = document.getElementById("name").value;
-  const phone = document.getElementById("phone").value;
-  const address = document.getElementById("address").value;
   const items = cart.map((item) => item.name).join(", ");
   const total = cart.reduce((sum, item) => sum + item.price, 0);
 
-  const params = new URLSearchParams({
-    order,
-    name,
-    phone,
-    address,
-    items,
-    total,
-  });
+  const options = {
+    key: "rzp_live_RsFAMXjzBQh5V7",
+    amount: total * 100,
+    currency: "INR",
+    name: "Arhaan Tech Innovations",
+    description: "Order " + order,
+    prefill: {
+      name: name,
+      contact: phone,
+    },
+    theme: { color: "#042C53" },
 
-  const url =
-    "https://script.google.com/macros/s/AKfycby01TDtQS6XKQZtL1UVd8t5hv1JQjJ2L67GhL0SZnIMHjnEtGHgSzxPa1gXoYPFsqaakw/exec?" +
-    params.toString();
+    handler: async function (response) {
+      const params = new URLSearchParams({
+        order,
+        name,
+        phone,
+        address,
+        items,
+        total,
+        payment_id: response.razorpay_payment_id,
+      });
 
-  // 🔥 IMPORTANT: fetch only, no redirect
-  await fetch(url);
+      const url =
+        "https://script.google.com/macros/s/AKfycbyv6F7ONyKZ9mih0eEup1Hr5Mrz639-4nmeW0KxbQjeYnXCz4qQvZISWnx4r0R5BkVixw/exec?" +
+        params.toString();
 
-  localStorage.removeItem("cart");
+      await fetch(url);
 
-  window.location.href = "success.html?order=" + order;
+      localStorage.removeItem("cart");
+      window.location.href = "success.html?order=" + order;
+    },
+  };
+
+  const rzp = new Razorpay(options);
+  rzp.open();
 }
